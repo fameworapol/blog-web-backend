@@ -1,7 +1,6 @@
 const slugify = require('slugify')
 //นำ model blogs เข้ามาทำงานที่ blogController.js
-const Blogs = require("../model/blog")
-const blog = require('../model/blog')
+const Blogs = require("../model/blogModel")
 const {uuidv4} = require('uuid')
 
 exports.create = (req, res) => {
@@ -30,7 +29,7 @@ exports.getAllBlog = (req, res) => {
     })
 }
 
-exports.getSingleBlog = (req,res) =>{
+exports.getBlog = (req,res) =>{
     const {slug} = req.params //เก็บค่า slug ที่ส่งมาพร้อม URL request ลงไป
     if(!slug){
         slug = uuidv4();
@@ -48,4 +47,14 @@ exports.remove = (req,res) =>{
     Blogs.findOneAndRemove({slug}).exec().then(blog=>{
         res.json({error:"ลบบทความเรียบร้อยแล้ว"})
     }).catch(err=>{console.log(err)})
+}
+
+exports.update = (req,res) =>{
+    const {slug} = req.params
+    const {title,content,author} = req.body
+    Blogs.findOneAndUpdate({slug},{title,content,author},{new:true}).exec().then(blog=>{
+        res.json(blog)
+    }).catch(err=>{
+        console.log(err);
+    })
 }

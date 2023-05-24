@@ -14,8 +14,10 @@ const port = process.env.PORT || 8080
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })
-const blogRoute = require('./route/blog')
+const blogRoute = require('./route/blogRouter')
+const authRoute = require('./route/authentication')
 app.use('/api',blogRoute)
+app.use('/api',authRoute)
 
 //Connect Database
 mongoose.connect(process.env.DATABASE,{
