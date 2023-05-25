@@ -10,8 +10,7 @@ const blogSchema = new mongoose.Schema({
         require:true
     },
     author:{
-        type:String,
-        default:"Admin"
+        type:String
     },
     slug:{
         type:String,
